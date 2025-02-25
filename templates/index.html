@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="mb-4 text-center">Study Materials</h1>
+<div class="row">
+    {% for material in materials %}
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ material.title }}</h5>
+                <p class="card-text">
+                    <strong>Subject:</strong> {{ material.subject }}<br>
+                    <strong>Type:</strong> {{ material.file_type }}
+                </p>
+                {% if material.file_type == 'PDF' %}
+                    <a href="{{ url_for('view_pdf', filename=material.file_path.split('/')[-1]) }}" class="btn btn-primary">View PDF</a>
+                {% else %}
+                    <a href="{{ url_for('download_file', filename=material.file_path.split('/')[-1]) }}" class="btn btn-primary">Download</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
